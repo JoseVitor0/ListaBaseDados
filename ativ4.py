@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-#
+
 
 df2018 = pd.read_csv("Dados_PRF_2018.csv", encoding="latin-1", sep=";")
 
