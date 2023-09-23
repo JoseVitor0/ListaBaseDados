@@ -1,26 +1,27 @@
+#Bibliotecas utilizadas: pandas, matplot e numpy
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Leitura dos DataFrames
+#extraindo os dados para cada dataframe
 df2018 = pd.read_csv("Dados_PRF_2018.csv", encoding="latin-1", sep=";")
 df2019 = pd.read_csv("Dados_PRF_2019.csv", encoding="latin-1", sep=";")
 df2020 = pd.read_csv("Dados_PRF_2020.csv", encoding="latin-1", sep=";")
 df2021 = pd.read_csv("Dados_PRF_2021.csv", encoding="latin-1", sep=";")
 df2022 = pd.read_csv("Dados_PRF_2022.csv", encoding="latin-1", sep=";")
 
-# Filtrar acidentes relacionados à ingestão de álcool
+# Aqui está sendo filtrado nos dados, apenas os acidentes que tiveram relação com ingestão de alcool
 def filtrar_ingestao_alcool(df):
     return df[(df["causa_acidente"] == "Ingestão de álcool pelo condutor") | (df["causa_acidente"] == "Ingestão de Álcool")]
 
-# Aplicar o filtro para cada DataFrame
+# Aplicando o filtro para cada DataFrame
 df_alcool2018 = filtrar_ingestao_alcool(df2018)
 df_alcool2019 = filtrar_ingestao_alcool(df2019)
 df_alcool2020 = filtrar_ingestao_alcool(df2020)
 df_alcool2021 = filtrar_ingestao_alcool(df2021)
 df_alcool2022 = filtrar_ingestao_alcool(df2022)
 
-# Contar o número total de acidentes relacionados à ingestão de álcool para cada ano
+# Contando o número total de acidentes relacionados à ingestão de álcool para cada ano
 contagens = [
     len(df_alcool2018),
     len(df_alcool2019),
@@ -31,20 +32,20 @@ contagens = [
 
 anos = [2018, 2019, 2020, 2021, 2022]
 
-# Crie um gráfico de barras
+#Aqui está sendo criado o gráfico, nesse caso será um grafico de barra
 plt.bar(anos, contagens, color='blue')
 
-# Personalize o gráfico
+#informações exibidas nos eixos do grafico
 plt.xlabel('Ano')
 plt.ylabel('Quantidade de Acidentes')
 plt.title('Quantidade Total de Acidentes por Ano - Ingestão de Álcool')
 
-# Adicione rótulos de texto acima das barras
+#Configurando para exibir em cada barra o valor de acidentes
 for x, y in zip(anos, contagens):
    plt.text(x, y, str(y), ha='center', va='bottom', fontsize=10, color='blue')
 
-# Defina os valores do eixo x igualmente espaçados
+#Definindo para no eixo x exibir cada ano embaixo das barras
 plt.xticks(anos)
 
-# Mostre o gráfico
+#Exibindo o grafico
 plt.show()

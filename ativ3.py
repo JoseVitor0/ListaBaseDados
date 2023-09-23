@@ -1,14 +1,15 @@
+#Bibliotecas utilizadas: pandas e matplot
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Leitura dos DataFrames
+#extraindo os dados para cada dataframe
 df2018 = pd.read_csv("Dados_PRF_2018.csv", encoding="latin-1", sep=";")
 df2019 = pd.read_csv("Dados_PRF_2019.csv", encoding="latin-1", sep=";")
 df2020 = pd.read_csv("Dados_PRF_2020.csv", encoding="latin-1", sep=";")
 df2021 = pd.read_csv("Dados_PRF_2021.csv", encoding="latin-1", sep=";")
 df2022 = pd.read_csv("Dados_PRF_2022.csv", encoding="latin-1", sep=";")
 
-# Criar um dicionário com os DataFrames
+#criando um dicionario para as informações de cada ano
 dfs = {
     '2018': df2018,
     '2019': df2019,
@@ -17,21 +18,19 @@ dfs = {
     '2022': df2022
 }
 
-# Inicializar listas para armazenar as quantidades de acidentes e os nomes dos estados
+#listas que serão usadas para mostrar no grafico
 quantidades_acidentes = []
 anos = [2018, 2019, 2020, 2021, 2022]
 nomes_estados = []
 
-# Iterar pelos anos e encontrar a quantidade de acidentes
+#Percorrendo as informações de cada ano e extraindo o valor de acidentes e qual foi o estado
 for ano, df in dfs.items():
     estado_max_acidentes = df['uf'].value_counts().idxmax()
     quantidade_acidentes = df[df['uf'] == estado_max_acidentes].shape[0]
     quantidades_acidentes.append(quantidade_acidentes)
-    nomes_estados.append(estado_max_acidentes)  # Nome do estado com mais acidentes e quantidade
+    nomes_estados.append(estado_max_acidentes)
 
-print(nomes_estados)
-
-# Criar um gráfico de linha para visualizar as quantidades
+#Configurando o grafico, nesse caso de linha
 plt.figure(figsize=(10, 6))
 plt.plot(anos, quantidades_acidentes, marker='o', linestyle='-', color='skyblue')
 plt.xlabel('Ano')
@@ -40,10 +39,12 @@ plt.title('Quantidade de Acidentes por Ano com Nome do Estado e Quantidade (Grá
 plt.grid(True)
 plt.tight_layout()
 
-plt.xticks(anos, [str(int(ano)) for ano in anos])
-
-# Adicionar o nome do estado e a quantidade de acidentes em cada ponto
+#configurando as informações exibidas no grafico, cada ponto e seu estado correspondente
 for ano, quantidade, nome_estado in zip(anos, quantidades_acidentes, nomes_estados):
     plt.text(ano, quantidade, str(nome_estado), ha='center', va='bottom', fontsize=10, color='black')
 
+#essa parte determina que no eixo x do gráfico, em cada ponto, será mostrado o ano em questão
+plt.xticks(anos, [str(int(ano)) for ano in anos])
+
+#exibe o grafico
 plt.show()
