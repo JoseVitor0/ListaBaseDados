@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+#
 # Leitura dos DataFrames
 df2018 = pd.read_csv("Dados_PRF_2018.csv", encoding="latin-1", sep=";")
 df2019 = pd.read_csv("Dados_PRF_2019.csv", encoding="latin-1", sep=";")
